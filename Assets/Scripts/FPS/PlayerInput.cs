@@ -11,6 +11,7 @@ public class PlayerInput : MonoBehaviour
     public float damage;
     public float fireRate = 15.0f;
     float nextFire = 0;
+    public GameManager manager;
 
 
     void Update()
@@ -48,6 +49,7 @@ public class PlayerInput : MonoBehaviour
                 enemy.takeDamage(damage);
                 if (enemy.health <= 0)
                 {
+                    manager.score += 200;
                     rigid.AddForce(direction * 200);
                 }
             }

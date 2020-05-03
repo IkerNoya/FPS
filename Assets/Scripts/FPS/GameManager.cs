@@ -5,15 +5,19 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
-    int score = 0;
+    public int score = 0;
     public int scoreLimit = 1000;
     float timer;
+    float sceneTimer;
     public float timerLimit;
     int index;
+    bool create = true;
+
     public GameObject enemy;
     public Transform player;
     public List<GameObject> spawns = new List<GameObject>();
     Transform currentSpawns;
+
     Vector3 initPlayerPos;
 
     private void Start()
@@ -24,15 +28,20 @@ public class GameManager : MonoBehaviour
     void Update()
     {
         timer += Time.deltaTime;
-        if (timer>=timerLimit)
+        if (timer>=timerLimit && create == true)
         {
             CreateEnemy();
             timer = 0;
         }
         if (score>=scoreLimit)
         {
-            Restart();
-            SceneManager.LoadScene("fps-end");
+            create = false;
+            sceneTimer += Time.deltaTime;
+            if (sceneTimer>=timerLimit)
+            {
+                Restart();
+                SceneManager.LoadScene("fps-end");
+            }
         }
 
     }
@@ -42,6 +51,8 @@ public class GameManager : MonoBehaviour
         index = 0;
         player.position = initPlayerPos;
         timer = 0;
+        sceneTimer = 0;
+        create = true;
     }
 
     void CreateEnemy()
