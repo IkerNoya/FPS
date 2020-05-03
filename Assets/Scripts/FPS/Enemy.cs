@@ -6,19 +6,35 @@ public class Enemy : MonoBehaviour
 {
     public float health = 100.0f;
     float timerLimit = 3;
-    bool dead = false;
     float timerDestroy;
+    bool dead = false;
+    public float movementSpeed;
+
+    public Transform player;
+    Rigidbody enemy;
+
+    Vector3 direction;
+    Vector3 movement;
+
     private void Start()
     {
         timerDestroy = 0;
+        enemy = GetComponent<Rigidbody>();
     }
 
     private void Update()
     {
-        if (dead == true)
+        direction = player.position - transform.position;
+        movement = direction * movementSpeed * Time.deltaTime;
+
+        if (!dead)
+        {
+            transform.position += movement;
+        }
+
+        if (dead)
         {
             timerDestroy += Time.deltaTime;
-            Debug.Log(timerDestroy);
             if (timerDestroy >= timerLimit)
             {
                 Die();
@@ -37,5 +53,6 @@ public class Enemy : MonoBehaviour
     {
         Destroy(gameObject);
     }
+ 
 }
 

@@ -9,6 +9,8 @@ public class PlayerInput : MonoBehaviour
 
     public float range;
     public float damage;
+    public float fireRate = 15.0f;
+    float nextFire = 0;
 
 
     void Update()
@@ -22,8 +24,9 @@ public class PlayerInput : MonoBehaviour
         {
             Debug.DrawRay(transform.position, transform.forward * hit.distance, Color.red);
         }
-        if (Input.GetButtonDown("Fire1"))
+        if (Input.GetButtonDown("Fire1") && Time.time >= nextFire)
         {
+            nextFire = Time.time + 1.0f / fireRate;
             shoot(transform.position, hit.transform.position);
         }
     }
