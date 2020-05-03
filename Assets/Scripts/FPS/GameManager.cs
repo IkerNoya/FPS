@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -13,11 +14,13 @@ public class GameManager : MonoBehaviour
     public Transform player;
     public List<GameObject> spawns = new List<GameObject>();
     Transform currentSpawns;
-    void Start()
-    {
-        
-    }
+    Vector3 initPlayerPos;
 
+    private void Start()
+    {
+        initPlayerPos = player.position;
+        DontDestroyOnLoad(this);
+    }
     void Update()
     {
         timer += Time.deltaTime;
@@ -26,9 +29,21 @@ public class GameManager : MonoBehaviour
             CreateEnemy();
             timer = 0;
         }
-        Debug.Log(timer);
+        if (score>=scoreLimit)
+        {
+            Restart();
+            SceneManager.LoadScene("fps-end");
+        }
+
     }
-    
+    private void Restart()
+    {
+        score = 0;
+        index = 0;
+        player.position = initPlayerPos;
+        timer = 0;
+    }
+
     void CreateEnemy()
     {
         index = Random.Range(0, spawns.Count);
