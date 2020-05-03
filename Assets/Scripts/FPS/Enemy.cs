@@ -11,7 +11,6 @@ public class Enemy : MonoBehaviour
     public float movementSpeed;
 
     public Transform player;
-    Rigidbody enemy;
 
     Vector3 direction;
     Vector3 movement;
@@ -19,7 +18,6 @@ public class Enemy : MonoBehaviour
     private void Start()
     {
         timerDestroy = 0;
-        enemy = GetComponent<Rigidbody>();
     }
 
     private void Update()

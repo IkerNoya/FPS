@@ -33,6 +33,7 @@ public class GameManager : MonoBehaviour
     {
         index = Random.Range(0, spawns.Count);
         currentSpawns = spawns[index].transform;
+        enemy.GetComponent<Enemy>().player = player;
         Instantiate(enemy, currentSpawns);
     }
 }
