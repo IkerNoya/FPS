@@ -9,11 +9,14 @@ public class Enemy : MonoBehaviour
     float timerDestroy;
     bool dead = false;
     public float movementSpeed;
+    int damage = 20;
 
     public Transform player;
 
     Vector3 direction;
     Vector3 movement;
+
+    public Collider playerCol;
 
     private void Start()
     {
@@ -51,6 +54,19 @@ public class Enemy : MonoBehaviour
     {
         Destroy(gameObject);
     }
- 
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (playerCol.gameObject == player)
+        {
+            Player playerS = GetComponent<Player>();
+            if (player!=null)
+            {
+                playerS.takeDamage(damage);
+                Destroy(this);
+            }
+        }
+    }
+
 }
 

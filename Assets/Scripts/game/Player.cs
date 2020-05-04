@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerInput : MonoBehaviour
+public class Player : MonoBehaviour
 {
     RaycastHit hit;
     public LayerMask rayLayer;
@@ -12,6 +12,7 @@ public class PlayerInput : MonoBehaviour
     public float fireRate = 15.0f;
     float nextFire = 0;
     public GameManager manager;
+    public int hp = 100;
 
 
     void Update()
@@ -25,7 +26,7 @@ public class PlayerInput : MonoBehaviour
         {
             Debug.DrawRay(transform.position, transform.forward * hit.distance, Color.red);
         }
-        if (Input.GetButtonDown("Fire1") && Time.time >= nextFire)
+        if (Input.GetButtonDown("Fire1") && Time.time >= nextFire && Physics.Raycast(transform.position, transform.forward, out hit, range, rayLayer))
         {
             nextFire = Time.time + 1.0f / fireRate;
             shoot(transform.position, hit.transform.position);
@@ -34,25 +35,23 @@ public class PlayerInput : MonoBehaviour
 
     void shoot(Vector3 from, Vector3 to)
     {
-        Vector3 direction = to-from;
-        if (Physics.Raycast(transform.position, transform.forward, out hit, range))
-        {
+        Vector3 direction = to - from;
 
-        }
-
-        if (Physics.Raycast(transform.position, transform.forward, out hit, range, rayLayer))
+        Enemy enemy = hit.transform.GetComponent<Enemy>();
+        Rigidbody rigid = hit.transform.GetComponent<Rigidbody>();
+        if (enemy != null)
         {
-           Enemy enemy =  hit.transform.GetComponent<Enemy>();
-           Rigidbody rigid = hit.transform.GetComponent<Rigidbody>();
-            if (enemy!=null)
+            enemy.takeDamage(damage);
+            if (enemy.health <= 0)
             {
-                enemy.takeDamage(damage);
-                if (enemy.health <= 0)
-                {
-                    manager.score += 200;
-                    rigid.AddForce(direction * 200);
-                }
+                manager.score += 200;
+                rigid.AddForce(direction * 200);
             }
         }
+
+    }
+    public void takeDamage(int enemyDamage)
+    {
+        hp -= enemyDamage;
     }
 }

@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &2020963974
+--- !u!114 &3641909834847714686
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -14,10 +14,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rayLayer:
     serializedVersion: 2
-    m_Bits: 310
+    m_Bits: 288
   range: 20
   damage: 50
   fireRate: 15
+  manager: {fileID: 9188752956251596400, guid: d9d8440a55c65b54cbd2921975ddede4, type: 3}
 --- !u!1001 &7933238936703616346
 PrefabInstance:
   m_ObjectHideFlags: 0

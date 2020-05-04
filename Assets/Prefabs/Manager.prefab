@@ -46,11 +46,6 @@ MonoBehaviour:
   score: 0
   timerLimit: 3
   survivalTimeLimit: 10
-  enemy: {fileID: 1832786925524870559, guid: 755aea36a98fd674e92e89d291a826da, type: 3}
-  player: {fileID: 7933238936703492058, guid: 730e9c594b12e4c42b2edaffdc5dc565, type: 3}
-  spawns:
-  - {fileID: 8040489712088416612, guid: 2e5017f51d7e7c949ad07c4066b26159, type: 3}
-  - {fileID: 591954533098673178, guid: 7c42e71f6cc13da4c87ce1fe7f8f775e, type: 3}
-  - {fileID: 7582972881187932085, guid: 4d13e2a3ea5195343bb88e4b99ca1e19, type: 3}
-  - {fileID: 2160808693015686028, guid: dab08b964bddd824c887a37648a9a146, type: 3}
+  Player: {fileID: 7933238936703714298, guid: 730e9c594b12e4c42b2edaffdc5dc565, type: 3}
+  spawner: {fileID: 0}
   gmanager: {fileID: 9188752956251596400}

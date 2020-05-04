@@ -7,79 +7,49 @@ using UnityEngine.SceneManagement;
 public class GameManager : MonoBehaviour
 {
     public int score = 0;
-    float timer;
     float sceneTimer;
     float survivalTimer;
     public float timerLimit;
     public float survivalTimeLimit = 10;
-    int index;
-    bool create = true;
+    public bool changeScene = false;
+    public GameObject Player;
+    public GameManager instance = null;
 
-    public GameObject enemy;
-    public Transform player;
-    public List<GameObject> spawns = new List<GameObject>();
-    Transform currentSpawns;
-    public GameManager gmanager;
-
-
-    Vector3 initPlayerPos;
 
     private void Awake()
     {
-        if (gmanager!=null)
+        if (instance==null)
         {
-            DontDestroyOnLoad(gameObject);
+            instance = this;
+            DontDestroyOnLoad(instance);
         }
-        else if (gmanager!=this)
+        else if (instance!=this)
         {
             Destroy(gameObject);
         }
     }
-    private void Start()
-    {
 
-        initPlayerPos = player.position;
-    }
     void Update()
     {
-        timer += Time.deltaTime;
-        survivalTimer += Time.deltaTime;
-        Debug.Log(survivalTimer);
-        if (timer>=timerLimit && create == true)
+        if (SceneManager.GetActiveScene()==SceneManager.GetSceneByName("fps-game"))
         {
-            CreateEnemy();
-            timer = 0;
-        }
-        if (survivalTimer>=survivalTimeLimit)
-        {
-            create = false;
-            sceneTimer += Time.deltaTime;
-            if (sceneTimer>=timerLimit)
+            survivalTimer += Time.deltaTime;
+            if (survivalTimer >= survivalTimeLimit)
             {
-                Restart();
-                Cursor.lockState = CursorLockMode.None;
-                Cursor.lockState = CursorLockMode.Confined;
-                Cursor.visible = true;
-                SceneManager.LoadScene("fps-end");
+                sceneTimer += Time.deltaTime;
+                changeScene = true;
+                if (sceneTimer > timerLimit && changeScene == true)
+                {
+
+                   SceneManager.LoadScene("fps-end");
+                    sceneTimer = 0;
+                    survivalTimer = 0;
+                    changeScene = false;
+
+                }
             }
         }
 
     }
-    private void Restart()
-    {
-        score = 0;
-        index = 0;
-        player.position = initPlayerPos;
-        timer = 0;
-        sceneTimer = 0;
-        create = true;
-    }
 
-    void CreateEnemy()
-    {
-        index = Random.Range(0, spawns.Count);
-        currentSpawns = spawns[index].transform;
-        enemy.GetComponent<Enemy>().player = player;
-        Instantiate(enemy, currentSpawns);
-    }
 }

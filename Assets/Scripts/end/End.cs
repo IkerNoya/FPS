@@ -8,6 +8,12 @@ public class End : MonoBehaviour
 {
     public GameManager manager;
     public Text finalScore;
+    private void Start()
+    {
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.lockState = CursorLockMode.Confined;
+        Cursor.visible = true;
+    }
 
     void Update()
     {
@@ -20,6 +26,7 @@ public class End : MonoBehaviour
     public void OnClickGame()
     {
         SceneManager.LoadScene("fps-game");
+        manager.score = 0;
     }
     public void OnClickCredits()
     {
