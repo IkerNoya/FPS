@@ -18,10 +18,9 @@ public class Enemy : MonoBehaviour
     public int rotationSpeed = 1;
     bool isAttacking = false;
     float attackSpeed;
-    int enemyCount = 13;
 
     float timerSel = 0;
-    float limit = 3;
+    float limit = 1.5f;
     bool change = false;
     int selection = 0;
     int selComp = 10;
@@ -57,26 +56,28 @@ public class Enemy : MonoBehaviour
 
     private void Update()
     {
-        timerSel += Time.deltaTime;
-        if (timerSel>1.5f)
+        if (!dead)
         {
-            change = true;
-            timerSel = 0;
-        }
+            timerSel += Time.deltaTime;
+            if (timerSel > limit)
+            {
+                change = true;
+                timerSel = 0;
+            }
 
-        float distance = Vector3.Distance(transform.position, player.position);
-        if (distance<20)
-        {
-            state = ghostStates.attack;
-            movementSpeed = attackSpeed;
+            float distance = Vector3.Distance(transform.position, player.position);
+            if (distance < 20)
+            {
+                state = ghostStates.attack;
+                movementSpeed = attackSpeed;
+            }
+            if (state == ghostStates.attack && distance > 20)
+            {
+                state = ghostStates.idle;
+                movementSpeed = savedMovementSpeed;
+            }
+            States();
         }
-        if (state==ghostStates.attack && distance > 20)
-        {
-            state = ghostStates.idle;
-            movementSpeed = savedMovementSpeed;
-        }
-
-        States();
 
         if (dead)
         {
@@ -104,7 +105,7 @@ public class Enemy : MonoBehaviour
         switch (state)
         {
             case ghostStates.idle:
-                randomDir();
+                RandomDir();
                 break;
 
             case ghostStates.attack:
@@ -143,7 +144,20 @@ public class Enemy : MonoBehaviour
         }
     }
 
-    void randomDir()
+    public IEnumerator Damage()
+    {
+        float timer = 0;
+        timer += Time.deltaTime;
+        while (timer<0.7f)
+        {
+            GetComponent<Renderer>().material.color = Color.red;
+            yield return null;
+        }
+
+
+    }
+
+    void RandomDir()
     {
         Quaternion rot;
         Vector3 move;

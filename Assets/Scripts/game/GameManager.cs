@@ -8,9 +8,7 @@ public class GameManager : MonoBehaviour
 {
     public int score = 0;
     float sceneTimer;
-    float survivalTimer;
     public float timerLimit;
-    public float survivalTimeLimit = 10;
     public bool changeScene = false;
     public bool isInGame = false;
     public int winCounter;
@@ -48,7 +46,6 @@ public class GameManager : MonoBehaviour
                     isInGame = false;
                     SceneManager.LoadScene("fps-end");
                     sceneTimer = 0;
-                    survivalTimer = 0;
                     changeScene = false;
                 }
             }

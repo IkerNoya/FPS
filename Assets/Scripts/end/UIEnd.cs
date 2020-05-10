@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-public class End : MonoBehaviour
+public class UIEnd : MonoBehaviour
 {
     public GameObject manager;
     public Text finalScore;
