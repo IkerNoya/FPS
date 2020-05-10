@@ -25,8 +25,7 @@ public class End : MonoBehaviour
     }
     public void OnClickGame()
     {
-        SceneManager.LoadScene("fps-game");
-        manager.score = 0;
+        manager.StartGame();
     }
     public void OnClickCredits()
     {

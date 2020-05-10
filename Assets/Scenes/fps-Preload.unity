@@ -133,6 +133,11 @@ PrefabInstance:
       propertyPath: score
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 9188752956251596400, guid: d9d8440a55c65b54cbd2921975ddede4,
+        type: 3}
+      propertyPath: isInGame
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 9188752956251596401, guid: d9d8440a55c65b54cbd2921975ddede4,
         type: 3}
       propertyPath: m_Name
