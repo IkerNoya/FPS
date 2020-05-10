@@ -5,10 +5,14 @@ using UnityEngine.SceneManagement;
 
 public class Menu : MonoBehaviour
 {
-    public GameManager manager;
+    public GameObject manager;
+    private void Start()
+    {
+        manager = GameObject.Find("Manager");
+    }
     public void OnClickGame()
     {
-        manager.StartGame();
+        manager.GetComponent<GameManager>().StartGame();
     }
     public void OnClickCredits()
     {

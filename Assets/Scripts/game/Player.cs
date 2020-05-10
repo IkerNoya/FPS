@@ -14,11 +14,15 @@ public class Player : MonoBehaviour
     public float range;
     public float damage;
     public float fireRate = 15.0f;
+    public bool winner = false;
     float nextFire = 0;
-    public GameManager manager;
+    GameObject manager;
     public int hp = 100;
 
-
+    private void Start()
+    {
+        manager = GameObject.Find("Manager");
+    }
     void Update()
     {
         if (Physics.Raycast(transform.position, transform.forward, out hit, range))
@@ -48,8 +52,9 @@ public class Player : MonoBehaviour
             enemy.takeDamage(damage);
             if (enemy.health <= 0)
             {
-                manager.score += 200;
+                manager.GetComponent<GameManager>().score += 200;
                 rigid.AddForce(direction * 200);
+                manager.GetComponent<GameManager>().winCounter++;
             }
         }
 

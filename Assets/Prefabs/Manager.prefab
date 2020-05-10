@@ -43,9 +43,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f6a69a99f1162264da19d968098ae6e0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  score: 0
+  score: 2600
   timerLimit: 3
   survivalTimeLimit: 10
+  changeScene: 0
+  isInGame: 0
+  enemyAmmount: 0
   Player: {fileID: 7933238936703714298, guid: 730e9c594b12e4c42b2edaffdc5dc565, type: 3}
-  spawner: {fileID: 0}
-  gmanager: {fileID: 9188752956251596400}
+  enemy: {fileID: 1832786925524870559, guid: 755aea36a98fd674e92e89d291a826da, type: 3}
+  instance: {fileID: 0}

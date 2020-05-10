@@ -6,18 +6,19 @@ using UnityEngine.UI;
 
 public class End : MonoBehaviour
 {
-    public GameManager manager;
+    public GameObject manager;
     public Text finalScore;
     private void Start()
     {
         Cursor.lockState = CursorLockMode.None;
         Cursor.lockState = CursorLockMode.Confined;
         Cursor.visible = true;
+        manager = GameObject.Find("Manager");
     }
 
     void Update()
     {
-        finalScore.text = "Score: " + manager.score.ToString();
+        finalScore.text = "Score: " + manager.GetComponent<GameManager>().score.ToString();
     }
     public void OnClickMenu()
     {
@@ -25,7 +26,7 @@ public class End : MonoBehaviour
     }
     public void OnClickGame()
     {
-        manager.StartGame();
+        manager.GetComponent<GameManager>().StartGame();
     }
     public void OnClickCredits()
     {

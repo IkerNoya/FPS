@@ -5,6 +5,9 @@ using UnityEngine;
 
 public class Enemy : MonoBehaviour
 {
+    public delegate void EnemyKilledAction(Enemy enemy);
+    public EnemyKilledAction onEnemyKilled;
+
     public float health = 100.0f;
     float timerLimit = 3;
     float timerDestroy;
@@ -15,6 +18,7 @@ public class Enemy : MonoBehaviour
     public int rotationSpeed = 1;
     bool isAttacking = false;
     float attackSpeed;
+    int enemyCount = 13;
 
     float timerSel = 0;
     float limit = 3;
@@ -43,7 +47,6 @@ public class Enemy : MonoBehaviour
 
     Vector3 direction;
     Vector3 movement;
-
     private void Start()
     {
         state = ghostStates.idle;
@@ -62,7 +65,6 @@ public class Enemy : MonoBehaviour
         }
 
         float distance = Vector3.Distance(transform.position, player.position);
-        Debug.Log(distance);
         if (distance<20)
         {
             state = ghostStates.attack;
@@ -82,7 +84,7 @@ public class Enemy : MonoBehaviour
             timerDestroy += Time.deltaTime;
             if (timerDestroy >= timerLimit)
             {
-                Die();
+                Destroy(gameObject);
             }
         }
     }
@@ -93,10 +95,6 @@ public class Enemy : MonoBehaviour
         {
             dead = true;
         }
-    }
-    void Die()
-    {
-        Destroy(gameObject);
     }
 
     void States()
@@ -127,7 +125,7 @@ public class Enemy : MonoBehaviour
         if (other.gameObject.layer == 10)
         {
             PlayerS.Hurt(damage);
-            Die();
+            Destroy(gameObject);
         }
         if (other.gameObject.layer == 9)
         {

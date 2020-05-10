@@ -13,9 +13,12 @@ public class GameManager : MonoBehaviour
     public float survivalTimeLimit = 10;
     public bool changeScene = false;
     public bool isInGame = false;
+    public int winCounter;
+    int winLimit = 13;
 
-    public GameObject Player;
+    public GameObject player;
     public GameManager instance = null;
+
 
 
 
@@ -30,28 +33,23 @@ public class GameManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
-
     }
+
     void Update()
     {
-        Debug.Log(isInGame);
         if (isInGame)
         {
-            survivalTimer += Time.deltaTime;
-            //Debug.Log(survivalTimer);
-            if (survivalTimer >= survivalTimeLimit)
+            if (winCounter>=winLimit)
             {
                 sceneTimer += Time.deltaTime;
                 changeScene = true;
                 if (sceneTimer > timerLimit && changeScene == true)
-                {
-
+                { 
                     isInGame = false;
                     SceneManager.LoadScene("fps-end");
                     sceneTimer = 0;
                     survivalTimer = 0;
                     changeScene = false;
-
                 }
             }
         }
@@ -62,6 +60,7 @@ public class GameManager : MonoBehaviour
         SceneManager.LoadScene("fps-game");
         isInGame = true;
         score = 0;
+        winCounter = 0;
     }
 
 }
