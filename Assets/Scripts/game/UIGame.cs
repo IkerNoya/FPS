@@ -6,12 +6,10 @@ using UnityEngine.UI;
 public class UIGame : MonoBehaviour
 {
     public Player player;
-    GameObject manager;
     public Text playerHP;
     public Text score;
     void Start()
     {
-        manager = GameObject.Find("Manager");
         playerHP.color = Color.cyan;
         score.color = Color.cyan;
     }
@@ -19,7 +17,7 @@ public class UIGame : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        score.text = "SCORE: " + manager.GetComponent<GameManager>().score.ToString();
+        score.text = "SCORE: " + GameManager.Get().score.ToString();
         playerHP.text = "HP: " + player.hp.ToString();
     }
 }

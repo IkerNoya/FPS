@@ -15,10 +15,12 @@ public class GameManager : MonoBehaviour
     int winLimit = 13;
 
     public GameObject player;
-    public GameManager instance = null;
+    private static GameManager instance = null;
 
-
-
+    public static GameManager Get()
+    {
+        return instance;
+    }
 
     private void Awake()
     {

@@ -28,7 +28,7 @@ void CreateEnemy()
     {
         index = Random.Range(0, spawns.Count);
         currentSpawns = spawns[index].transform;
-        enemy.GetComponent<Enemy>().player = player;
+        enemy.GetComponent<Ghost>().player = player;
         Instantiate(enemy, currentSpawns);
     }
 }

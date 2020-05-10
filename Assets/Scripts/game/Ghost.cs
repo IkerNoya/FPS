@@ -3,10 +3,8 @@ using System.Collections.Generic;
 using System.Threading;
 using UnityEngine;
 
-public class Enemy : MonoBehaviour
+public class Ghost : MonoBehaviour
 {
-    public delegate void EnemyKilledAction(Enemy enemy);
-    public EnemyKilledAction onEnemyKilled;
 
     public float health = 100.0f;
     float timerLimit = 3;
@@ -142,19 +140,6 @@ public class Enemy : MonoBehaviour
             isAttacking = true;
             yield return null;
         }
-    }
-
-    public IEnumerator Damage()
-    {
-        float timer = 0;
-        timer += Time.deltaTime;
-        while (timer<0.7f)
-        {
-            GetComponent<Renderer>().material.color = Color.red;
-            yield return null;
-        }
-
-
     }
 
     void RandomDir()

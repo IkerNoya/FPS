@@ -16,13 +16,9 @@ public class Player : MonoBehaviour
     public float fireRate = 15.0f;
     public bool winner = false;
     float nextFire = 0;
-    GameObject manager;
     public int hp = 100;
 
-    private void Start()
-    {
-        manager = GameObject.Find("Manager");
-    }
+
     void Update()
     {
         if (Physics.Raycast(transform.position, transform.forward, out hit, range))
@@ -45,16 +41,16 @@ public class Player : MonoBehaviour
     {
         Vector3 direction = to - from;
 
-        Enemy enemy = hit.transform.GetComponent<Enemy>();
+        Ghost enemy = hit.transform.GetComponent<Ghost>();
         Rigidbody rigid = hit.transform.GetComponent<Rigidbody>();
         if (enemy != null)
         {
             enemy.takeDamage(damage);
             if (enemy.health <= 0)
             {
-                manager.GetComponent<GameManager>().score += 200;
+                GameManager.Get().score += 200;
                 rigid.AddForce(direction * 200);
-                manager.GetComponent<GameManager>().winCounter++;
+                GameManager.Get().winCounter++;
             }
         }
 
