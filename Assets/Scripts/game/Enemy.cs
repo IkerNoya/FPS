@@ -10,7 +10,12 @@ public class Enemy : MonoBehaviour
     bool dead = false;
     public float movementSpeed;
     int damage = 20;
-
+    enum ghostStates
+    {
+        idle,
+        attack
+    };
+    ghostStates state;
     public Transform player;
 
     Vector3 direction;
@@ -20,18 +25,13 @@ public class Enemy : MonoBehaviour
 
     private void Start()
     {
+        state = ghostStates.idle;
         timerDestroy = 0;
     }
 
     private void Update()
     {
-        direction = player.position - transform.position;
-        movement = direction * movementSpeed * Time.deltaTime;
-
-        if (!dead)
-        {
-            transform.position += movement;
-        }
+        States();
 
         if (dead)
         {
@@ -53,6 +53,28 @@ public class Enemy : MonoBehaviour
     void Die()
     {
         Destroy(gameObject);
+    }
+
+    void States()
+    {
+        
+        switch (state)
+        {
+            case ghostStates.idle:
+
+                break;
+
+            case ghostStates.attack:
+                Quaternion lookPos = Quaternion.LookRotation(player.position);
+                direction = player.position - transform.position;
+                movement = direction * movementSpeed * Time.deltaTime;
+
+                if (!dead)
+                {
+                    transform.position += movement;
+                }
+                break;
+        }
     }
 
     private void OnCollisionEnter(Collision collision)
