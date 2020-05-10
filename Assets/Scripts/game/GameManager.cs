@@ -38,7 +38,7 @@ public class GameManager : MonoBehaviour
         if (isInGame)
         {
             survivalTimer += Time.deltaTime;
-            Debug.Log(survivalTimer);
+            //Debug.Log(survivalTimer);
             if (survivalTimer >= survivalTimeLimit)
             {
                 sceneTimer += Time.deltaTime;

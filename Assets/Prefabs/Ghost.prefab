@@ -124,9 +124,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   health: 100
-  movementSpeed: 0.6
+  movementSpeed: 5
+  rotationSpeed: 1
   player: {fileID: 7933238936703492058, guid: 730e9c594b12e4c42b2edaffdc5dc565, type: 3}
-  playerObj: {fileID: 7933238936703714298, guid: 730e9c594b12e4c42b2edaffdc5dc565,
-    type: 3}
   playerCol: {fileID: 7933238936701138490, guid: 730e9c594b12e4c42b2edaffdc5dc565,
     type: 3}
