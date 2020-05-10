@@ -39,6 +39,7 @@ public class Enemy : MonoBehaviour
     ghostStates state;
     Directions enemyDirection;
     public Transform player;
+    public Player PlayerS;
 
     Vector3 direction;
     Vector3 movement;
@@ -54,7 +55,7 @@ public class Enemy : MonoBehaviour
     private void Update()
     {
         timerSel += Time.deltaTime;
-        if (timerSel>3)
+        if (timerSel>1.5f)
         {
             change = true;
             timerSel = 0;
@@ -121,23 +122,20 @@ public class Enemy : MonoBehaviour
         }
     }
 
-    private void OnCollisionEnter(Collision collision)
+    private void OnCollisionEnter(Collision other)
     {
-        if (collision.gameObject.name=="Player")
+        if (other.gameObject.layer == 10)
         {
-            Player playerS = GetComponent<Player>();
-            if (player != null)
-            {
-                playerS.takeDamage(damage);
-                Destroy(this);
-            }
+            PlayerS.Hurt(damage);
+            Die();
         }
-        if (collision.gameObject.layer == 9)
+        if (other.gameObject.layer == 9)
         {
             enemyDirection = Directions.backwards;
         }
     }
-    
+
+
     IEnumerator enemyAttack() // probablemente sea innecesario, pero funciona bien de momento
     {
         while (!dead)

@@ -1,6 +1,10 @@
-﻿using System.Collections;
+﻿using System;
+using System.CodeDom;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SocialPlatforms;
+using UnityEngine.SocialPlatforms.Impl;
 
 public class Player : MonoBehaviour
 {
@@ -50,7 +54,7 @@ public class Player : MonoBehaviour
         }
 
     }
-    public void takeDamage(int enemyDamage)
+    public void Hurt(int enemyDamage)
     {
         hp -= enemyDamage;
     }
