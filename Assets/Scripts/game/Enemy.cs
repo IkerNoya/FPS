@@ -10,9 +10,11 @@ public class Enemy : MonoBehaviour
     float timerDestroy;
     bool dead = false;
     public float movementSpeed;
+    float savedMovementSpeed;
     int damage = 20;
     public int rotationSpeed = 1;
     bool isAttacking = false;
+    float attackSpeed;
 
     float timerSel = 0;
     float limit = 3;
@@ -45,6 +47,8 @@ public class Enemy : MonoBehaviour
     {
         state = ghostStates.idle;
         timerDestroy = 0;
+        savedMovementSpeed = movementSpeed;
+        attackSpeed = movementSpeed + 2;
     }
 
     private void Update()
@@ -55,6 +59,20 @@ public class Enemy : MonoBehaviour
             change = true;
             timerSel = 0;
         }
+
+        float distance = Vector3.Distance(transform.position, player.position);
+        Debug.Log(distance);
+        if (distance<20)
+        {
+            state = ghostStates.attack;
+            movementSpeed = attackSpeed;
+        }
+        if (state==ghostStates.attack && distance > 20)
+        {
+            state = ghostStates.idle;
+            movementSpeed = savedMovementSpeed;
+        }
+
         States();
 
         if (dead)
@@ -83,13 +101,11 @@ public class Enemy : MonoBehaviour
     void States()
     {
         Quaternion rotAngle;
-        movement = direction * movementSpeed * Time.deltaTime;
+        movement = direction.normalized * movementSpeed * Time.deltaTime;
         switch (state)
         {
             case ghostStates.idle:
                 randomDir();
-                Debug.Log(enemyDirection);
-                
                 break;
 
             case ghostStates.attack:
@@ -135,7 +151,7 @@ public class Enemy : MonoBehaviour
     {
         Quaternion rot;
         Vector3 move;
-        Debug.Log(timerSel);
+
         if (change)
         {
             if (selection!=selComp)
