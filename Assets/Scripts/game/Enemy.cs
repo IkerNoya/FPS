@@ -10,6 +10,9 @@ public class Enemy : MonoBehaviour
     bool dead = false;
     public float movementSpeed;
     int damage = 20;
+    public int rotationSpeed = 1;
+    bool isAttacking = false;
+
     enum ghostStates
     {
         idle,
@@ -25,7 +28,7 @@ public class Enemy : MonoBehaviour
 
     private void Start()
     {
-        state = ghostStates.idle;
+        state = ghostStates.attack;
         timerDestroy = 0;
     }
 
@@ -35,6 +38,7 @@ public class Enemy : MonoBehaviour
 
         if (dead)
         {
+            isAttacking = false;
             timerDestroy += Time.deltaTime;
             if (timerDestroy >= timerLimit)
             {
@@ -57,7 +61,6 @@ public class Enemy : MonoBehaviour
 
     void States()
     {
-        
         switch (state)
         {
             case ghostStates.idle:
@@ -65,12 +68,13 @@ public class Enemy : MonoBehaviour
                 break;
 
             case ghostStates.attack:
-                Quaternion lookPos = Quaternion.LookRotation(player.position);
-                direction = player.position - transform.position;
-                movement = direction * movementSpeed * Time.deltaTime;
-
-                if (!dead)
+                StartCoroutine(enemyAttack());
+                if (isAttacking)
                 {
+                    Quaternion rotAngle = Quaternion.LookRotation(player.position - transform.position);
+                    transform.rotation = Quaternion.Slerp(transform.rotation, rotAngle, rotationSpeed * Time.deltaTime);
+                    direction = player.position - transform.position;
+                    movement = direction * movementSpeed * Time.deltaTime;
                     transform.position += movement;
                 }
                 break;
@@ -82,11 +86,20 @@ public class Enemy : MonoBehaviour
         if (playerCol.gameObject == player)
         {
             Player playerS = GetComponent<Player>();
-            if (player!=null)
+            if (player != null)
             {
                 playerS.takeDamage(damage);
                 Destroy(this);
             }
+        }
+    }
+    
+    IEnumerator enemyAttack() // probablemente sea innecesario, pero funciona bien de momento
+    {
+        while (!dead)
+        {
+            isAttacking = true;
+            yield return null;
         }
     }
 
